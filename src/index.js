@@ -26,20 +26,6 @@ export default {
       }
     }
 
-    // Serve robots.txt
-    if (url.pathname === '/robots.txt') {
-      const robots = `User-agent: *
-Allow: /
-Sitemap: https://${url.hostname}/sitemap.xml
-`;
-      return new Response(robots, {
-        headers: {
-          'Content-Type': 'text/plain; charset=utf-8',
-          'Cache-Control': 'max-age=86400'
-        },
-      });
-    }
-
     // List all available sitemaps from GitHub
     if (url.pathname === '/' || url.pathname === '') {
       try {
@@ -63,7 +49,6 @@ Sitemap: https://${url.hostname}/sitemap.xml
     .file-item { margin: 10px 0; padding: 12px; background: #f5f5f5; border-left: 4px solid #0066cc; border-radius: 4px; }
     .file-item a { color: #0066cc; text-decoration: none; font-weight: bold; }
     .file-item a:hover { text-decoration: underline; }
-    .endpoint { margin-top: 20px; padding: 10px; background: #e8f4f8; border-radius: 4px; }
     .footer { margin-top: 30px; font-size: 12px; color: #666; border-top: 1px solid #ddd; padding-top: 15px; }
     code { background: #f5f5f5; padding: 2px 6px; border-radius: 3px; }
   </style>
@@ -88,16 +73,12 @@ Sitemap: https://${url.hostname}/sitemap.xml
           }
 
           html += `</ul>
-    
-    <div class="endpoint">
-      <strong>🤖 robots.txt:</strong> <a href="/robots.txt">/robots.txt</a>
-    </div>
 
     <div class="footer">
       <p><strong>How to use:</strong></p>
       <p>1. Edit XML files in <code>/sitemaps/</code> directory on <a href="https://github.com/Victor1cnd/sitemaps" target="_blank">GitHub</a></p>
       <p>2. Worker automatically fetches latest files from GitHub</p>
-      <p>3. Submit <code>https://yourworker.workers.dev/sitemap.xml</code> to Google Search Console</p>
+      <p>3. Submit sitemap URLs to Google Search Console</p>
       <p>4. Add new URLs daily without breaking the website</p>
     </div>
   </div>
@@ -123,11 +104,7 @@ Sitemap: https://${url.hostname}/sitemap.xml
 </head>
 <body>
   <h1>Sitemap Server Active</h1>
-  <p>Try accessing:</p>
-  <ul>
-    <li><a href="/sitemap.xml">/sitemap.xml</a></li>
-    <li><a href="/robots.txt">/robots.txt</a></li>
-  </ul>
+  <p>Visit <a href="https://github.com/Victor1cnd/sitemaps" target="_blank">GitHub repository</a> to add XML files to /sitemaps/</p>
 </body>
 </html>`, {
         headers: { 'Content-Type': 'text/html; charset=utf-8' },
