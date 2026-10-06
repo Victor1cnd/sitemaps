@@ -1,0 +1,11 @@
+name = "sitemaps"
+type = "javascript"
+account_id = "YOUR_ACCOUNT_ID"
+workers_dev = true
+route = "yourdomain.com/sitemap*"
+zone_id = "YOUR_ZONE_ID"
+
+[env.production]
+name = "sitemaps-production"
+route = "yourdomain.com/sitemap*"
+zone_id = "YOUR_ZONE_ID"
