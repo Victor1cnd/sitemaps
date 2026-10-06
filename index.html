@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxorita Sitemap - Product Directory</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 2px solid #ffd700;
+        }
+        
+        h1 {
+            color: #ffd700;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            color: #ffd700;
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #b0b0b0;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .search-box {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        #searchInput {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            font-size: 1em;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            background: #0f3460;
+            color: #e0e0e0;
+            outline: none;
+            transition: all 0.3s;
+        }
+        
+        #searchInput:focus {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            background: #16213e;
+        }
+        
+        #searchInput::placeholder {
+            color: #666;
+        }
+        
+        .urls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .url-card {
+            background: rgba(15, 52, 96, 0.5);
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
+        }
+        
+        .url-card:hover {
+            background: rgba(15, 52, 96, 0.9);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .url-card a {
+            color: #ffd700;
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 0.95em;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            transition: color 0.3s;
+        }
+        
+        .url-card a:hover {
+            color: #ffed4e;
+            text-decoration: underline;
+        }
+        
+        .url-card .index {
+            color: #888;
+            font-size: 0.85em;
+            margin-top: auto;
+            padding-top: 10px;
+            border-top: 1px solid #444;
+        }
+        
+        .url-card .open-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 12px;
+            background: #ffd700;
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-align: center;
+            width: fit-content;
+        }
+        
+        .url-card .open-btn:hover {
+            background: #ffed4e;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 1.1em;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            border-top: 1px solid #444;
+            margin-top: 40px;
+        }
+        
+        .view-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .view-toggle button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: #0f3460;
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .view-toggle button.active {
+            background: #ffd700;
+            color: #1a1a2e;
+        }
+        
+        .view-toggle button:hover {
+            background: #ffd700;
+            color: #1a1a2e;
+        }
+        
+        .urls-list {
+            display: none;
+            background: rgba(15, 52, 96, 0.3);
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .urls-list.active {
+            display: block;
+        }
+        
+        .urls-list li {
+            list-style: none;
+            padding: 8px 0;
+            color: #e0e0e0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .urls-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .urls-list li a {
+            color: #ffd700;
+            text-decoration: none;
+            word-break: break-all;
+            font-size: 0.9em;
+        }
+        
+        .urls-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✨ Luxorita Sitemap</h1>
+            <p class="subtitle">Premium 24K Gold Jewelry Collection</p>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="totalCount">1001</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">20</div>
+                    <div class="stat-label">Global Locations</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Product Types</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="🔍 Search by product name, model, or location..."
+            >
+        </div>
+        
+        <div class="view-toggle">
+            <button class="active" onclick="toggleView('grid')">Grid View</button>
+            <button onclick="toggleView('list')">List View</button>
+        </div>
+        
+        <div id="urlsGrid" class="urls-grid"></div>
+        <ol id="urlsList" class="urls-list"></ol>
+        
+        <div id="noResults" class="no-results" style="display: none;">
+            No products found matching your search.
+        </div>
+        
+        <footer>
+            <p>Luxorita Premium Jewelry Sitemap | All URLs from your product catalog</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Total Indexed: <span id="footerCount">1001</span> products across 20 locations</p>
+        </footer>
+    </div>
+
+    <script>
+        // All URLs from the sitemap
+        const urls = [
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0001-new-york",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0002-london",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0003-dubai",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0004-paris",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0005-tokyo",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0006-geneva",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0007-hong-kong",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0008-singapore",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0009-los-angeles",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0010-miami",
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0011-zurich",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0012-milan",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0013-beverly-hills",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0014-monaco",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0015-shanghai",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0016-sydney",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0017-toronto",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0018-doha",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0019-riyadh",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0020-abu-dhabi"
+        ];
+
+        const allUrls = [
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0001-new-york",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0002-london",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0003-dubai",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0004-paris",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0005-tokyo",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0006-geneva",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0007-hong-kong",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0008-singapore",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0009-los-angeles",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0010-miami",
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0011-zurich",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0012-milan",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0013-beverly-hills",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0014-monaco",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0015-shanghai",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0016-sydney",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0017-toronto",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0018-doha",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0019-riyadh",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0020-abu-dhabi",
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0021-new-york",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0022-london",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0023-dubai",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0024-paris",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0025-tokyo",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0026-geneva",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0027-hong-kong",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0028-singapore",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0029-los-angeles",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0030-miami",
+            "https://luxorita.store/24k-gold-cnc-machined-minimalist-ring-model-lx-0031-zurich",
+            "https://luxorita.store/24k-gold-solid-bar-riveted-bracelet-model-lx-0032-milan",
+            "https://luxorita.store/24k-gold-faceted-aerodynamic-band-model-lx-0033-beverly-hills",
+            "https://luxorita.store/24k-gold-mirror-polished-plane-bangle-model-lx-0034-monaco",
+            "https://luxorita.store/24k-gold-hexagonal-geometric-pendant-model-lx-0035-shanghai",
+            "https://luxorita.store/24k-gold-architectural-link-chain-model-lx-0036-sydney",
+            "https://luxorita.store/24k-gold-industrial-rivet-studs-model-lx-0037-toronto",
+            "https://luxorita.store/24k-gold-sculptural-cuff-model-lx-0038-doha",
+            "https://luxorita.store/24k-gold-tapered-edge-engagement-ring-model-lx-0039-riyadh",
+            "https://luxorita.store/24k-gold-linear-inlaid-diamond-cufflinks-model-lx-0040-abu-dhabi",
+            "https://luxorita.store/products/luxury-1.0ct-brilliant-cut-fl-d-ring"
+        ];
+
+        let currentView = 'grid';
+        let currentFilter = '';
+
+        function renderUrls(filter = '') {
+            const grid = document.getElementById('urlsGrid');
+            const list = document.getElementById('urlsList');
+            const noResults = document.getElementById('noResults');
+            
+            const filtered = allUrls.filter(url => 
+                url.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                list.innerHTML = '';
+                noResults.style.display = 'block';
+                return;
+            }
+
+            noResults.style.display = 'none';
+
+            if (currentView === 'grid') {
+                grid.innerHTML = filtered.map((url, index) => `
+                    <div class="url-card">
+                        <a href="${url}" target="_blank" title="Open ${url}">
+                            ${url}
+                        </a>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px;">
+                            <span class="index">#${allUrls.indexOf(url) + 1} of ${allUrls.length}</span>
+                            <a href="${url}" target="_blank" class="open-btn">Open</a>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                list.innerHTML = filtered.map((url, index) => `
+                    <li>
+                        <a href="${url}" target="_blank">
+                            #${allUrls.indexOf(url) + 1} - ${url}
+                        </a>
+                    </li>
+                `).join('');
+            }
+
+            document.getElementById('totalCount').textContent = filtered.length;
+        }
+
+        function toggleView(view) {
+            currentView = view;
+            document.querySelectorAll('.view-toggle button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const grid = document.getElementById('urlsGrid');
+            const list = document.getElementById('urlsList');
+
+            if (view === 'grid') {
+                grid.classList.add('active');
+                list.classList.remove('active');
+            } else {
+                grid.classList.remove('active');
+                list.classList.add('active');
+            }
+
+            renderUrls(currentFilter);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            currentFilter = e.target.value;
+            renderUrls(currentFilter);
+        });
+
+        // Initial render
+        renderUrls();
+    </script>
+</body>
+</html>
