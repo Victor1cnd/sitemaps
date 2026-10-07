@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://raw.githubusercontent.com/Victor1cnd/sitemaps/main/sitemap.xml
+Sitemap: https://victor1cnd.github.io/sitemaps/sitemap.xml
